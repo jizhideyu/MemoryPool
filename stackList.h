@@ -7,8 +7,8 @@ template <typename T>
 class stackNode
 {
 public:
-	T data;
-	stackNode* pre_node;
+	T m_data;
+	stackNode* m_pre_node;
 };
 
 template<typename T, typename Alloc>
@@ -27,14 +27,14 @@ public:
 	T pop();	
 
 private:
-	allocator allocator_;
-	node* head_node_;
+	allocator m_allocator;
+	node* m_head_node;
 };
 
 template <typename T, typename Alloc>
 stackList<T, Alloc>::stackList()
 {
-	head_node_ = nullptr;
+	m_head_node = nullptr;
 }
 
 template <typename T, typename Alloc>
@@ -46,42 +46,42 @@ stackList<T, Alloc>::~stackList()
 template <typename T, typename Alloc>
 void stackList<T, Alloc>::push(T element)
 {
-	node* new_node = allocator_.allocate(1);
-	allocator_.construct(new_node, node());
+	node* new_node = m_allocator.allocate(1);
+	m_allocator.construct(new_node, node());
 	new_node->data = element;
-	new_node->pre_node = head_node_;
-	head_node_ = new_node;
+	new_node->pre_node = m_head_node;
+	m_head_node = new_node;
 }
 
 template <typename T, typename Alloc>
 bool stackList<T, Alloc>::empty()
 {
-	return (head_node_ == nullptr);
+	return (m_head_node == nullptr);
 }
 
 template <typename T, typename Alloc>
 T stackList<T, Alloc>::pop()
 {
-	T result = head_node_->data;
-	node* temp = head_node_->pre_node;
-	allocator_.destroy(head_node_);
-	allocator_.deallocate(head_node_, 1);
-	head_node_ = temp;
+	T result = m_head_node->data;
+	node* temp = m_head_node->pre_node;
+	m_allocator.destroy(m_head_node);
+	m_allocator.deallocate(m_head_node, 1);
+	m_head_node = temp;
 	return result;
 }
 
 template <typename T, typename Alloc>
 void stackList<T, Alloc>::clear()
 {
-	node* current_node = head_node_;
+	node* current_node = m_head_node;
 	while (current_node)
 	{
 		node* temp = current_node->pre_node;
-		allocator_.destroy(current_node);
-		allocator_.deallocate(current_node, 1);
+		m_allocator.destroy(current_node);
+		m_allocator.deallocate(current_node, 1);
 		current_node = temp;
 	}
-	head_node_ = nullptr;
+	m_head_node = nullptr;
 }
 
 #endif
