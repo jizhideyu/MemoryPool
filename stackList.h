@@ -47,9 +47,9 @@ template <typename T, typename Alloc>
 void stackList<T, Alloc>::push(T element)
 {
 	node* new_node = m_allocator.allocate(1);
-	m_allocator.construct(new_node, node());
-	new_node->data = element;
-	new_node->pre_node = m_head_node;
+	m_allocator.construct(new_node);
+	new_node->m_data = element;
+	new_node->m_pre_node = m_head_node;
 	m_head_node = new_node;
 }
 
@@ -62,8 +62,8 @@ bool stackList<T, Alloc>::empty()
 template <typename T, typename Alloc>
 T stackList<T, Alloc>::pop()
 {
-	T result = m_head_node->data;
-	node* temp = m_head_node->pre_node;
+	T result = m_head_node->m_data;
+	node* temp = m_head_node->m_pre_node;
 	m_allocator.destroy(m_head_node);
 	m_allocator.deallocate(m_head_node, 1);
 	m_head_node = temp;
@@ -76,7 +76,7 @@ void stackList<T, Alloc>::clear()
 	node* current_node = m_head_node;
 	while (current_node)
 	{
-		node* temp = current_node->pre_node;
+		node* temp = current_node->m_pre_node;
 		m_allocator.destroy(current_node);
 		m_allocator.deallocate(current_node, 1);
 		current_node = temp;
