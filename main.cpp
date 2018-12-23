@@ -7,6 +7,7 @@
 
 #define ELEMS  25000000
 #define TEST_TYPE int
+//
 
 int main()
 {

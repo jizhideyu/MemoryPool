@@ -24,6 +24,7 @@ private:
 	slotPtr m_last_slot;
 	slotPtr m_free_slots;
 	//assert(BLOCK_SIZE >= 2 * sizeof(slot), "BLOCKSIZE is too small");
+	//just test a ??
 
 public:
 	blockAllocator()
